@@ -17,9 +17,6 @@ class Navbar extends Component {
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <Link className="nav-link" to="/feed">Post Feed</Link>
-        </li>
-        <li className="nav-item">
           <Link className="nav-link" to="/dashboard">Dashboard</Link>
         </li>
         <li className="nav-item">
@@ -43,9 +40,6 @@ class Navbar extends Component {
     const guestLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <Link className="nav-link" to="/register">Sign Up</Link>
-        </li>
-        <li className="nav-item">
           <Link className="nav-link" to="/login">Login</Link>
         </li>
       </ul>
@@ -55,7 +49,7 @@ class Navbar extends Component {
       <div>
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
           <div className="container">
-            <Link className="navbar-brand" to="/">DevConnector</Link>
+            <Link className="navbar-brand" to="/">Home</Link>
             <button
               className="navbar-toggler"
               type="button"
@@ -65,13 +59,6 @@ class Navbar extends Component {
             </button>
 
             <div className="collapse navbar-collapse" id="mobile-nav">
-              <ul className="navbar-nav mr-auto">
-                <li className="nav-item">
-                  <Link className="nav-link" to="/profiles">
-                    Developers
-                  </Link>
-                </li>
-              </ul>
               {isAuthenticated ? authLinks : guestLinks}
             </div>
           </div>

@@ -12,13 +12,15 @@ class Profiles extends Component {
 
   render() {
     const { profiles, loading } = this.props.profile;
+    const { isAuthenticated } = this.props.auth;
+    console.log(isAuthenticated);
     let profileItem;
     if (profiles === null || loading) {
       profileItem = <Spinner />;
     } else {
       if (profiles.length > 0) {
         profileItem = profiles.map(profile => (
-          <ProfileItem key={profile._id} profile={profile} />
+          <ProfileItem key={profile._id} profile={profile} isAuthenticated={isAuthenticated} />
         ))
       } else {
         profileItem = <h4>No profile found....</h4>
@@ -44,11 +46,13 @@ class Profiles extends Component {
 
 Profiles.propTypes = {
   getProfiles: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-  profile: state.profile
+  profile: state.profile,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, { getProfiles })(Profiles);

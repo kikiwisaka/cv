@@ -11,6 +11,8 @@ class Landing extends Component {
   }
 
   render() {
+    const { isAuthenticated, user } = this.props.auth;
+
     return (
       <div>
         <div className="landing">
@@ -18,11 +20,12 @@ class Landing extends Component {
             <div className="container">
               <div className="row">
                 <div className="col-md-12 text-center">
-                  <h1 className="display-3 mb-4">Developer Connector</h1>
-                  <p className="lead"> Create a developer profile/portfolio, share posts and get help from other developers</p>
+                  <h1 className="display-3 mb-4">Greeting from Kiki Wisaka</h1>
+                  <p className="lead">This is my profesional profile page.</p>
+                  <p>
+                    Please click <Link to="/profile/kikiwisaka" auth={isAuthenticated}> here </Link> to get more detail of my profile.
+                  </p>
                   <hr />
-                  <Link to="/register" className="btn btn-lg btn-info mr-2">Sign Up</Link>
-                  <Link to="/login" className="btn btn-lg btn-light">Login</Link>
                 </div>
               </div>
             </div>

@@ -5,7 +5,8 @@ import {
 const initialState = {
   profile: null,
   profiles: null,
-  loading: false
+  loading: false,
+  isAuthenticated: false
 }
 
 export default function (state = initialState, action) {

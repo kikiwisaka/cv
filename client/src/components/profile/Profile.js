@@ -23,21 +23,26 @@ class Profile extends Component {
   }
 
   render() {
-    const { profile, loading } = this.props.profile;
+    const { profile, loading, isAuthenticated } = this.props.profile;
+    const goBackLink = (
+      <div className="row">
+        <div className="col-md-6">
+          <Link to="/profiles" className="btn btn-light mb-3 float-left">
+            Back To Profiles
+              </Link>
+        </div>
+        <div className="col-md-6"></div>
+      </div>
+    )
+
     let profileContent;
     if (profile === null || loading) {
       profileContent = <Spinner />;
     } else {
       profileContent = (
         <div>
-          <div className="row">
-            <div className="col-md-6">
-              <Link to="/profiles" className="btn btn-light mb-3 float-left">
-                Back To Profiles
-              </Link>
-            </div>
-            <div className="col-md-6"></div>
-          </div>
+          {isAuthenticated ? goBackLink : null}
+
           <ProfileHeader profile={profile} />
           <ProfileAbout profile={profile} />
           <ProfileCreds
