@@ -9,11 +9,11 @@ class ProfileCreds extends Component {
       <li key={exp._id} className="list-group-item">
         <h4>{exp.company}</h4>
         <p>
-          <Moment format="YYYY/MM/DD">{exp.from}</Moment> -
+          <Moment format="LL">{exp.from}</Moment> -
           {exp.to === null ? (
             ' Now'
           ) : (
-              <Moment format="YYYY/MM/DD">{exp.to}</Moment>
+              <Moment format="LL">{exp.to}</Moment>
             )}
         </p>
         <p>
@@ -40,11 +40,11 @@ class ProfileCreds extends Component {
       <li key={edu._id} className="list-group-item">
         <h4>{edu.school}</h4>
         <p>
-          <Moment format="YYYY/MM/DD">{edu.from}</Moment> -
+          <Moment format="LL">{edu.from}</Moment> -
           {edu.to === null ? (
             ' Now'
           ) : (
-              <Moment format="YYYY/MM/DD">{edu.to}</Moment>
+              <Moment format="LL">{edu.to}</Moment>
             )}
         </p>
         <p>
@@ -65,7 +65,7 @@ class ProfileCreds extends Component {
     return (
       <div className="row">
         <div className="col-md-6">
-          <h3 className="text-center text-info">Experience</h3>
+          <h3 className="text-center text-info">Experiences</h3>
           {expItems.length > 0 ? (
             <ul className="list-group">{expItems}</ul>
           ) : (
@@ -74,7 +74,7 @@ class ProfileCreds extends Component {
         </div>
 
         <div className="col-md-6">
-          <h3 className="text-center text-info">Education</h3>
+          <h3 className="text-center text-info">Educations</h3>
           {eduItems.length > 0 ? (
             <ul className="list-group">{eduItems}</ul>
           ) : (
