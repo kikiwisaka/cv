@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import TextFieldGroup from '../common/TextFieldGroup';
+import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addEducation } from '../../actions/profileActions';
@@ -12,6 +13,7 @@ class AddEducation extends Component {
       school: '',
       degree: '',
       fieldofstudy: '',
+      description: '',
       from: '',
       to: '',
       current: false,
@@ -46,6 +48,7 @@ class AddEducation extends Component {
       school: this.state.school,
       degree: this.state.degree,
       fieldofstudy: this.state.fieldofstudy,
+      description: this.state.description,
       from: this.state.from,
       to: this.state.to,
       current: this.state.current
@@ -88,6 +91,14 @@ class AddEducation extends Component {
                   value={this.state.fieldofstudy}
                   onChange={this.onChange}
                   error={errors.fieldofstudy}
+                />
+                <h6>Description</h6>
+                <TextAreaFieldGroup
+                  placeholder="Description"
+                  name="description"
+                  value={this.state.description}
+                  onChange={this.onChange}
+                  error={errors.description}
                 />
                 <h6>From Date</h6>
                 <TextFieldGroup
