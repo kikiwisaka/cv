@@ -8,6 +8,9 @@ class Education extends Component {
   onDeleteClick(id) {
     this.props.deleteEducation(id);
   }
+  onEditClick(id) {
+    console.log('deleye');
+  }
 
   render() {
     const education = this.props.education.map(edu => (
@@ -23,6 +26,7 @@ class Education extends Component {
             )}
         </td>
         <td>
+          <button onClick={this.onEditClick.bind(this, edu._id)} className="btn btn-warning mr-2">Edit</button>
           <button onClick={this.onDeleteClick.bind(this, edu._id)} className="btn btn-danger">Delete</button>
         </td>
       </tr>
