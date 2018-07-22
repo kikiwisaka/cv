@@ -242,7 +242,45 @@ router.post('/education', passport.authenticate('jwt', { session: false }), (req
     })
 });
 
-// @route   DELETE api/profile/education/:eeducation_id 
+// @route PUT api/profile/education/:education_id
+// @desc Edit education based on profile
+// @access Private
+router.put('/education/:education_id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  console.log(req);
+
+  const { errors, isValid } = validateEducationInput(req.body);
+  if (!isValid)
+    return res.status(400).json(errors);
+  const eduValue = {
+    school: req.body.school,
+    degree: req.body.degree,
+    fieldofstudy: req.body.fieldofstudy,
+    description: req.body.description,
+    from: req.body.from,
+    to: req.body.to,
+    current: req.body.current
+  }
+
+  Profile
+    .findOne({ user: req.user_id })
+    .then(profile => {
+      if (profile) {
+        profile.education.findOneAndUpdate({ education_id: req.param.education_id }).then(education => {
+          if (education) {
+            Profile.education.findOneAndUpdate(
+              { _id: req.body.education_id },
+              { $set: eduValue },
+              { new: true }
+            ).then(education => res.json(education));
+          } else {
+            return res.status(404).json('Education does not exist.');
+          }
+        });
+      }
+    })
+});
+
+// @route   DELETE api/profile/education/:education_id 
 // @desc    Delete experience into profile 
 // @access  Private
 router.delete('/education/:education_id', passport.authenticate('jwt', { session: false }), (req, res) => {
