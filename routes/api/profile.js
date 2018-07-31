@@ -246,8 +246,6 @@ router.post('/education', passport.authenticate('jwt', { session: false }), (req
 // @desc Edit education based on profile
 // @access Private
 router.put('/education/:education_id', passport.authenticate('jwt', { session: false }), (req, res) => {
-  console.log(req);
-
   const { errors, isValid } = validateEducationInput(req.body);
   if (!isValid)
     return res.status(400).json(errors);
@@ -260,24 +258,25 @@ router.put('/education/:education_id', passport.authenticate('jwt', { session: f
     to: req.body.to,
     current: req.body.current
   }
-
   Profile
-    .findOne({ user: req.user_id })
+    .findOne({ user: req.user.id })
     .then(profile => {
-      if (profile) {
-        profile.education.findOneAndUpdate({ education_id: req.param.education_id }).then(education => {
-          if (education) {
-            Profile.education.findOneAndUpdate(
-              { _id: req.body.education_id },
-              { $set: eduValue },
-              { new: true }
-            ).then(education => res.json(education));
-          } else {
-            return res.status(404).json('Education does not exist.');
-          }
-        });
-      }
+
+      const removeIndex = profile
+        .education
+        .map(item => item.id)
+        .indexOf(req.params.education_id);
+      //remove old value from array
+      profile.education.splice(removeIndex, 1);
+      //add new value into array
+      profile
+        .education
+        .unshift(eduValue);
+      profile
+        .save()
+        .then(profile => res.json(profile));
     })
+    .catch(err => res.status(404).json(err));
 });
 
 // @route   DELETE api/profile/education/:education_id 
