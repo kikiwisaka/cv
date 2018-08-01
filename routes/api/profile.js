@@ -190,6 +190,51 @@ router.post('/experience', passport.authenticate('jwt', { session: false }), (re
     })
 });
 
+// @route PUT api/profile/experience/:experience_id
+// @desc Edit experience based on profile
+// @access Private
+router.put('/experience/:experience_id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  const { errors, isValid } = validateExperienceInput(req.body);
+  if (!isValid)
+    return res.status(400).json(errors);
+
+  const expeValue = {
+    title: req.body.title,
+    company: req.body.company,
+    location: req.body.location,
+    from: req.body.from,
+    to: req.body.to,
+    current: req.body.current,
+    description: req.body.description
+  }
+  console.log(expeValue);
+  Profile
+    .findOne({ user: req.user.id })
+    .then(profile => {
+      const removeIndex = profile
+        .experience
+        .map(item => item.id)
+        .indexOf(req.params.experience_id);
+      //check exsiting data
+      if (removeIndex != -1) {
+        //remove old value from array
+        profile.experience.splice(removeIndex, 1);
+        //add new value into array
+        profile
+          .experience
+          .unshift(expeValue);
+        //sorting by from (join date)
+        profile.experience.sort((a, b) => new Date(b.from) - new Date(a.from));
+        profile
+          .save()
+          .then(profile => res.json(profile));
+      } else {
+        return res.status(404).json(errors);
+      }
+    })
+    .catch(err => res.status(404).json(err));
+});
+
 // @route   DELETE api/profile/experience/:experience_id @desc    Delete
 // experience into profile @access  Private
 router.delete('/experience/:experience_id', passport.authenticate('jwt', { session: false }), (req, res) => {
