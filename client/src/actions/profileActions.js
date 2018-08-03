@@ -135,6 +135,19 @@ export const addEducation = (educationData, history) => dispatch => {
     });
 };
 
+//Edit Education
+export const editEducation = (educationData, history) => dispatch => {
+  axios
+    .put('/api/profile/education/education_id')
+    .then(res => history.push('/dashboard'))
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    });
+};
+
 //Delete Education
 export const deleteEducation = (id) => dispatch => {
   axios

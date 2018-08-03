@@ -207,7 +207,6 @@ router.put('/experience/:experience_id', passport.authenticate('jwt', { session:
     current: req.body.current,
     description: req.body.description
   }
-  console.log(expeValue);
   Profile
     .findOne({ user: req.user.id })
     .then(profile => {
