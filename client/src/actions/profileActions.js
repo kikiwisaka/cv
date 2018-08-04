@@ -105,6 +105,19 @@ export const addExperience = (experienceData, history) => dispatch => {
     });
 };
 
+//Edit Experience
+export const editExperience = (experienceData, history) => dispatch => {
+  axios
+    .put(`/api/profile/experience/${experienceData.experience_id}`, experienceData)
+    .then(res => history.push('/dashboard'))
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    });
+};
+
 //Delete Experience
 export const deleteExperience = (id) => dispatch => {
   axios
