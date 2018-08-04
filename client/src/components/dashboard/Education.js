@@ -24,7 +24,7 @@ class Education extends Component {
             )}
         </td>
         <td>
-          <Link to={`/edit-education/${edu._id}`} className="btn btn-light">
+          <Link to={`/education/${edu._id}`} className="btn btn-light">
             <i className="fab fa-black-tie text-info mr-1"></i>
             Edit Education
           </Link>

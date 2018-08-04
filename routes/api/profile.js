@@ -305,20 +305,25 @@ router.put('/education/:education_id', passport.authenticate('jwt', { session: f
   Profile
     .findOne({ user: req.user.id })
     .then(profile => {
-
+      debugger;
       const removeIndex = profile
         .education
         .map(item => item.id)
         .indexOf(req.params.education_id);
-      //remove old value from array
-      profile.education.splice(removeIndex, 1);
-      //add new value into array
-      profile
-        .education
-        .unshift(eduValue);
-      profile
-        .save()
-        .then(profile => res.json(profile));
+      //check exsiting data
+      if (removeIndex != -1) {
+        //remove old value from array
+        profile.education.splice(removeIndex, 1);
+        //add new value into array
+        profile
+          .education
+          .unshift(eduValue);
+        profile
+          .save()
+          .then(profile => res.json(profile));
+      } else {
+        return res.status(404).json(errors);
+      }
     })
     .catch(err => res.status(404).json(err));
 });

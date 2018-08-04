@@ -76,7 +76,7 @@ class App extends Component {
                 <PrivateRoute exact path="/add-education" component={AddEducation} />
               </Switch>
               <Switch>
-                <PrivateRoute exact path="/edit-education/:education_id" component={EditEducation} />
+                <PrivateRoute exact path="/education/:education_id" component={EditEducation} />
               </Switch>
               <Switch>
                 <PrivateRoute exact path="/feed" component={Posts} />

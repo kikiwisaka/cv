@@ -5,9 +5,6 @@ import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { editEducation, getCurrentProfile } from '../../actions/profileActions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import isEmpty from '../../validation/is-empty';
-// import { getUrlHashSplit } from '../common/CommonFunction';
-
 
 class EditEducation extends Component {
   constructor(props) {
@@ -23,6 +20,8 @@ class EditEducation extends Component {
       disabled: false,
       errors: {}
     }
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
   componentDidMount() {
     this.props.getCurrentProfile();
@@ -45,14 +44,18 @@ class EditEducation extends Component {
             currentEducation.degree = educationList[i].degree;
             currentEducation.fieldofstudy = educationList[i].fieldofstudy;
             currentEducation.description = educationList[i].description;
-            currentEducation.from = educationList[i].from;
+            let dateFrom = new Date(educationList[i].from);
+            currentEducation.from = dateFrom.toISOString().substr(0, 10);
             currentEducation.to = educationList[i].to;
+            let dateTo = new Date(educationList[i].to);
+            currentEducation.to = dateTo.toISOString().substr(0, 10);
             break;
           default:
             break;
         }
       }
       this.setState({
+        education_id: educationId,
         school: currentEducation.school,
         degree: currentEducation.degree,
         fieldofstudy: currentEducation.fieldofstudy,
@@ -62,8 +65,26 @@ class EditEducation extends Component {
       });
     }
   }
+  onChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    }, () => { });
+  }
+
   onSubmit(e) {
-    console.log('aaaaaaa');
+    e.preventDefault();
+    const educationData = {
+      education_id: this.state.education_id,
+      school: this.state.school,
+      degree: this.state.degree,
+      fieldofstudy: this.state.fieldofstudy,
+      description: this.state.description,
+      from: this.state.from,
+      to: this.state.to,
+      current: this.state.current,
+    }
+
+    this.props.editEducation(educationData, this.props.history);
   }
 
   render() {
@@ -117,6 +138,7 @@ class EditEducation extends Component {
                   name="from"
                   type="date"
                   value={this.state.from}
+                  defaultValue={this.state.from}
                   onChange={this.onChange}
                   error={errors.from}
                 />

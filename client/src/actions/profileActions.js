@@ -2,6 +2,7 @@ import axios from 'axios';
 import {
   GET_PROFILE, PROFILE_LOADING, GET_ERRORS, CLEAR_CURRENT_PROFILE, SET_CURRENT_USER, GET_PROFILES
 } from './types';
+import { debug } from 'util';
 
 // Get current profile
 export const getCurrentProfile = () => dispatch => {
@@ -138,7 +139,7 @@ export const addEducation = (educationData, history) => dispatch => {
 //Edit Education
 export const editEducation = (educationData, history) => dispatch => {
   axios
-    .put('/api/profile/education/education_id')
+    .put(`/api/profile/education/${educationData.education_id}`, educationData)
     .then(res => history.push('/dashboard'))
     .catch(err => {
       dispatch({
