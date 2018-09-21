@@ -305,7 +305,6 @@ router.put('/education/:education_id', passport.authenticate('jwt', { session: f
   Profile
     .findOne({ user: req.user.id })
     .then(profile => {
-      debugger;
       const removeIndex = profile
         .education
         .map(item => item.id)
