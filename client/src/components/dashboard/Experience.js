@@ -27,13 +27,13 @@ class Experience extends Component {
           <Link to={`/experience/${exp._id}`}>
             <i className="far fa-edit text-info mr-1"></i>
           </Link>
-          <button onClick={this.onDeleteClick.bind(this, exp._id)} className="btn btn-danger">Delete</button>
+          <button onClick={this.onDeleteClick.bind(this, exp._id)} className="fa fa-times"></button>
         </td>
       </tr>
     ));
     return (
       <div>
-        <h4 className="mb-4">Experience Credentials</h4>
+        <h4 className="mb-4">Experiences</h4>
         <table className="table">
           <thead>
             <tr>
